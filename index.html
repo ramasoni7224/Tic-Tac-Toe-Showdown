@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tic-Tac-Toe Showdown</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="home-container">
+    <h1 class="home-title">🎮 Tic-Tac-Toe Showdown</h1>
+
+    <div class="btn-group">
+      <a href="friend.html" class="home-btn">👥 Play with Friend</a>
+      <a href="computer.html" class="home-btn">🤖 Play with Computer</a>
+    </div>
+
+    <button id="themeToggle" class="theme-toggle">🌙 Toggle Theme</button>
+  </div>
+
+  <script>
+    // Load stored theme
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      document.documentElement.setAttribute("data-theme", storedTheme);
+    }
+
+    // Theme Toggle
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    });
+  </script>
+</body>
+</html>

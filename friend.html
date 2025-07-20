@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Play with Friend</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="name-form-container" id="nameForm">
+    <h2>Enter Player Names</h2>
+    <input type="text" id="player1" placeholder="Player 1 Name (X)" required />
+    <input type="text" id="player2" placeholder="Player 2 Name (O)" required />
+    <button id="startGame">Start Game</button>
+  </div>
+
+  <div class="game-container hide" id="gameBoard">
+    <h2 id="turnDisplay">Current Turn: </h2>
+    <div id="scoreBoard">Score — <span id="p1Name">Player 1</span>: <span id="p1Score">0</span> | <span id="p2Name">Player 2</span>: <span id="p2Score">0</span></div>
+    
+    <div class="boxes">
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+    </div>
+
+    <button class="newgame-btn">New Game</button>
+  </div>
+
+  <div class="msg-container hide" id="msgContainer">
+    <p id="msg"></p>
+    <button class="newgame-btn" onclick="startNewGame()">New Game</button>
+  </div>
+
+  <script src="friend.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Play with Computer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="name-form-container" id="levelSelect">
+    <h2>Select Difficulty</h2>
+    <button class="home-btn" onclick="startGame('easy')">Easy</button>
+    <button class="home-btn" onclick="startGame('medium')">Medium</button>
+    <button class="home-btn" onclick="startGame('hard')">Hard</button>
+  </div>
+
+  <div class="game-container hide" id="gameBoard">
+    <h2 id="turnDisplay">Current Turn: </h2>
+    <div id="scoreBoard">Score — You: <span id="userScore">0</span> | AI: <span id="aiScore">0</span></div>
+    
+    <div class="boxes">
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+    </div>
+
+    <button class="newgame-btn">New Game</button>
+  </div>
+
+  <div class="msg-container hide" id="msgContainer">
+    <p id="msg"></p>
+    <button class="newgame-btn" onclick="startNewGame()">New Game</button>
+  </div>
+
+  <script src="computer.js"></script>
+</body>
+</html>
