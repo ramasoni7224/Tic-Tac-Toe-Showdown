@@ -12,6 +12,8 @@ let aiScore = 0;
 let isUserTurn = true;
 let difficulty = "easy";
 let gameOver = false;
+let lastLoser = null; // 'X' or 'O'
+
 
 const winningPattern = [
   [0, 1, 2],
@@ -200,20 +202,26 @@ function checkWinner() {
 // Show win/tie message and update scores
 function declareWinner(winner) {
   gameOver = true;
+
   if (winner === "tie") {
     msg.innerText = "😲 It's a Tie!";
+    lastLoser = lastLoser === "X" ? "O" : "X"; // Alternate turn on tie
   } else if (winner === "X") {
     msg.innerText = "🏆 You Win!";
     userScore++;
     userScoreSpan.innerText = userScore;
+    lastLoser = "O";
   } else {
     msg.innerText = "💀 AI Wins!";
     aiScore++;
     aiScoreSpan.innerText = aiScore;
+    lastLoser = "X";
   }
+
   msgContainer.classList.remove("hide");
   boxes.forEach(box => box.disabled = true);
 }
+
 
 // Start a new game
 function startNewGame() {
@@ -221,8 +229,19 @@ function startNewGame() {
     box.innerText = "";
     box.disabled = false;
   });
+
   msgContainer.classList.add("hide");
-  isUserTurn = true;
   gameOver = false;
+
+  // Assign first turn to the loser of last round
+  if (lastLoser === "X") {
+    isUserTurn = true;
+  } else if (lastLoser === "O") {
+    isUserTurn = false;
+  } else {
+    isUserTurn = true; // default for first match
+  }
+
   updateTurn();
 }
+
