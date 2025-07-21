@@ -16,8 +16,10 @@ const newGameBtns = document.querySelectorAll(".newgame-btn");
 const boxes = document.querySelectorAll(".box");
 
 let player1 = "", player2 = "";
-let turnO = false; // X starts
+let turnO = false; // false = X (P1), true = O (P2)
 let p1Score = 0, p2Score = 0;
+let lastLoser = null;
+let gameOver = false;
 
 const winningPattern = [
   [0,1,2],[3,4,5],[6,7,8],
@@ -40,11 +42,17 @@ startGameBtn.addEventListener("click", () => {
 
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
+    if (gameOver || box.innerText !== "") return;
+
     box.innerText = turnO ? "O" : "X";
     box.disabled = true;
+
     checkWinner();
-    turnO = !turnO;
-    updateTurnDisplay();
+
+    if (!gameOver) {
+      turnO = !turnO;
+      updateTurnDisplay();
+    }
   });
 });
 
@@ -55,7 +63,7 @@ function updateTurnDisplay() {
 
 function checkWinner() {
   for (let pattern of winningPattern) {
-    let [a, b, c] = pattern;
+    const [a, b, c] = pattern;
     if (
       boxes[a].innerText !== "" &&
       boxes[a].innerText === boxes[b].innerText &&
@@ -72,17 +80,24 @@ function checkWinner() {
   }
 }
 
-function declareWinner(winner) {
-  let winnerName = winner === "X" ? player1 : player2;
-  if (winner === "tie") {
-    msg.innerText = `😲 It's a Tie!`;
+function declareWinner(winnerSymbol) {
+  gameOver = true;
+
+  if (winnerSymbol === "tie") {
+    msg.innerText = "😲 It's a Tie!";
+    lastLoser = lastLoser === "X" ? "O" : "X";
+  } else if (winnerSymbol === "X") {
+    msg.innerText = `🏆 ${player1} Wins!`;
+    p1Score++;
+    p1ScoreDisplay.innerText = p1Score;
+    lastLoser = "O";
   } else {
-    msg.innerText = `🏆 ${winnerName} Wins!`;
-    if (winner === "X") p1Score++;
-    else p2Score++;
+    msg.innerText = `🏆 ${player2} Wins!`;
+    p2Score++;
+    p2ScoreDisplay.innerText = p2Score;
+    lastLoser = "X";
   }
-  p1ScoreDisplay.innerText = p1Score;
-  p2ScoreDisplay.innerText = p2Score;
+
   msgContainer.classList.remove("hide");
   boxes.forEach(box => box.disabled = true);
 }
@@ -92,12 +107,28 @@ function startNewGame() {
     box.innerText = "";
     box.disabled = false;
   });
+
   msgContainer.classList.add("hide");
-  turnO = false;
+  gameOver = false;
+
+  // Set turn based on lastLoser
+  if (lastLoser === "X") {
+    turnO = false; // X (player1) gets first turn
+  } else if (lastLoser === "O") {
+    turnO = true;  // O (player2) gets first turn
+  } else {
+    turnO = false; // default first game
+  }
+
   updateTurnDisplay();
 }
 
-// Load theme
+// New Game buttons
+newGameBtns.forEach((btn) => {
+  btn.addEventListener("click", startNewGame);
+});
+
+// Theme support
 const storedTheme = localStorage.getItem("theme");
 if (storedTheme) {
   document.documentElement.setAttribute("data-theme", storedTheme);
