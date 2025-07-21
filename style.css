@@ -170,6 +170,24 @@ button {
   transform: scale(1.1);
   box-shadow: 0 0 15px var(--btn-hover);
 }
+.home-nav-btn {
+  padding: 10px 20px;
+  background-color: var(--btn-color);
+  color: var(--text-color);
+  font-size: 1.2rem;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+.home-nav-btn:hover {
+  background-color: var(--btn-hover);
+  color: #fff;
+  box-shadow: 0 0 10px #fff;
+}
+
 
 .newgame-btn {
   margin-top: 15px;
